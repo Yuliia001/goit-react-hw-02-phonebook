@@ -1,11 +1,28 @@
-import { ContactForm } from './Form';
+import { Component } from 'react';
+import { ContactForm } from './Form/ContactForm';
+import { ContactList } from './Contacts/ContactsList';
+import { GlobalStyle } from './GlobalStyle';
+import { Layout } from './Layout';
+import { nanoid } from 'nanoid';
 
-export const App = () => {
-  return (
-    <div>
-      <h2>Phone book</h2>
-      <ContactForm />
-      <h2>Contacts</h2>
-    </div>
-  );
-};
+export class App extends Component {
+  state = {
+    contacts: [],
+    filter: '',
+  };
+
+  addContact = newContact => {
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
+  };
+  render() {
+    return (
+      <Layout>
+        <ContactForm onAdd={this.addContact} />
+        <ContactList contacts={this.state.contacts} />
+        <GlobalStyle />
+      </Layout>
+    );
+  }
+}
