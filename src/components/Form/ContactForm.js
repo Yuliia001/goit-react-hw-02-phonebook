@@ -13,7 +13,7 @@ const ContactSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Too Short!')
     .matches(
-      /^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
       'Name may contain only letters.'
     )
     .required('Required'),
