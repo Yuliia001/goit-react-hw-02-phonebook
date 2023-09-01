@@ -21,29 +21,33 @@ export class App extends Component {
     const dublicateContact = this.state.contacts.some(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
+
     if (dublicateContact) {
       alert(`${name} already in contact list!`);
-    } else {
-      const newContact = {
-        id: nanoid(),
-        name,
-        number,
-      };
-
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, newContact],
-      }));
+      return;
     }
+
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
 
   handleFindContact = evt => {
     this.setState({ filter: evt.target.value });
   };
+
   handleDeleteContact = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
+
   render() {
     const { contacts, filter } = this.state;
     const filteredContacts = contacts.filter(contact =>
@@ -53,10 +57,12 @@ export class App extends Component {
       <Layout>
         <ContactForm onAdd={this.addContact} />
         <Filter filter={filter} onFilterContact={this.handleFindContact} />
-        <ContactList
-          contacts={filteredContacts}
-          onDelete={this.handleDeleteContact}
-        />
+        {filteredContacts.length > 0 && (
+          <ContactList
+            contacts={filteredContacts}
+            onDelete={this.handleDeleteContact}
+          />
+        )}
         <GlobalStyle />
       </Layout>
     );
